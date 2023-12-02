@@ -12,7 +12,7 @@ class CarouselSliderEx extends StatefulWidget {
 
 class _CarouselSliderExState extends State<CarouselSliderEx> {
   int currentPosition = 0;
-
+/*
   CarouselOptions get options => CarouselOptions(
         onPageChanged: (index, _) {
           currentPosition = index;
@@ -32,12 +32,44 @@ class _CarouselSliderExState extends State<CarouselSliderEx> {
         enlargeFactor: 0.3,
         scrollDirection: Axis.horizontal,
       );
-
+*/
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        CarouselSlider.builder(
+          options: CarouselOptions(
+            onPageChanged: (index, _) {
+              currentPosition = index;
+              print(index);
+              setState() {}
+              ;
+            },
+            height: 200,
+            aspectRatio: 16 / 9,
+            viewportFraction: 0.8,
+            initialPage: 0,
+            enableInfiniteScroll: true,
+            reverse: false,
+            autoPlay: true,
+            autoPlayInterval: Duration(seconds: 3),
+            autoPlayAnimationDuration: Duration(milliseconds: 800),
+            autoPlayCurve: Curves.fastOutSlowIn,
+            enlargeCenterPage: true,
+            enlargeFactor: 0.3,
+            scrollDirection: Axis.horizontal,
+          ),
+          itemBuilder: (BuildContext context, int index, int realIndex) {
+            final uri_of_images = widget.items[index]["url"];
+            print(uri_of_images);
+            return Container(
+                margin: EdgeInsets.all(10),
+                child: Image.network(uri_of_images));
+          },
+          itemCount: widget.items.length,
+        ),
+        /*
         CarouselSlider(
           options: options,
           items: widget.items.map((i) {
@@ -59,6 +91,14 @@ class _CarouselSliderExState extends State<CarouselSliderEx> {
             );
           }).toList(),
         ),
+
+
+
+
+
+
+*/
+
         DotsIndicator(
           dotsCount: 5,
           position: currentPosition,
