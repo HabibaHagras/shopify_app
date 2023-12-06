@@ -11,7 +11,7 @@ class CategoriesRowHome extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          CategoryItemRowWidget(
+          ProductItemRowWidget(
             gradientColors: [
               Color(0xffffa554),
               Color(0xfffe6953),
@@ -23,7 +23,7 @@ class CategoriesRowHome extends StatelessWidget {
           const SizedBox(
             width: 20,
           ),
-          CategoryItemRowWidget(
+          ProductItemRowWidget(
             gradientColors: [
               Color(0xff56f1f9),
               Color(0xff69b9fe),
@@ -35,7 +35,7 @@ class CategoriesRowHome extends StatelessWidget {
           const SizedBox(
             width: 20,
           ),
-          CategoryItemRowWidget(
+          ProductItemRowWidget(
             gradientColors: [
               Color(0xff97f34d),
               Color(0xff42c441),
@@ -47,7 +47,7 @@ class CategoriesRowHome extends StatelessWidget {
           const SizedBox(
             width: 20,
           ),
-          CategoryItemRowWidget(
+          ProductItemRowWidget(
             gradientColors: [
               Colors.white,
               Colors.white,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CategoryItemRowWidget extends StatelessWidget {
+class ProductItemRowWidget extends StatelessWidget {
   final Color shadowColor;
   final List<Color> gradientColors;
   String? imagePath;
   Widget? iconWidget;
   final String title;
-  CategoryItemRowWidget(
+  ProductItemRowWidget(
       {required this.shadowColor,
       required this.gradientColors,
       this.imagePath,

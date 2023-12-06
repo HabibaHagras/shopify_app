@@ -30,6 +30,9 @@ class _MasterPageState extends State<MasterPage> {
     Text(
       'Profile Page',
     ),
+       Text(
+      'product Page',
+    ),
     Text(
       'Cart Page',
     ),
@@ -67,7 +70,11 @@ class _MasterPageState extends State<MasterPage> {
                         ? LineIcons.icons
                         : index == 2
                             ? LineIcons.user
-                            : LineIcons.shoppingCart,
+                            : index == 3
+                            ?LineIcons.procedures:
+                            
+                            
+                            LineIcons.shoppingCart,
                 size: 25,
                 color: isActive ? Colors.green : Colors.grey,
               ),
@@ -78,7 +85,8 @@ class _MasterPageState extends State<MasterPage> {
                         ? 'Category'
                         : index == 2
                             ? 'Profile'
-                            : 'Cart',
+                            : index==3 ? 'product':
+                            'Cart',
                 style: TextStyle(
                   color: isActive ? Colors.green : Colors.grey,
                 ),
