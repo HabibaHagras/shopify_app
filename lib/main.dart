@@ -6,7 +6,8 @@ import 'package:shopify_app/pages/splash_page.dart';
 import 'package:shopify_app/services/prefrences.service.dart';
 import 'package:shopify_app/utils/theme.utils.dart';
 import 'package:get_it/get_it.dart';
-
+import 'package:provider/provider.dart';
+import 'providers/productProvider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,8 +23,16 @@ void main() async {
     print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Error When Set prefrences');
   }
 
-
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => ),
+    FutureProvider<List<Map<String, dynamic>>?>(
+      create: (_) => ProductProvider().getProducts(),
+      initialData: null,
+      catchError: (_, err) {
+        return [];
+      },
+    )
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

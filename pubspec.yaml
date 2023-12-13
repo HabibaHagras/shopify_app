@@ -43,6 +43,7 @@ dependencies:
   carousel_slider: 
   dots_indicator: 
   get_it: ^7.6.4
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:
