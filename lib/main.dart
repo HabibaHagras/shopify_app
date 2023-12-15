@@ -24,16 +24,26 @@ void main() async {
   }
 
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => ),
-    FutureProvider<List<Map<String, dynamic>>?>(
+    FutureProvider<List>(
       create: (_) => ProductProvider().getProducts(),
-      initialData: null,
+      initialData: [],
       catchError: (_, err) {
         return [];
       },
     )
   ], child: const MyApp()));
 }
+
+
+
+
+
+
+
+
+
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

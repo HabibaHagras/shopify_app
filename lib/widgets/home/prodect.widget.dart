@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
+import 'package:provider/provider.dart';
 import 'package:shopify_app/seeder/data.seeder.dart';
 import 'package:shopify_app/widgets/home/iteams.product.dart';
 
@@ -8,44 +9,72 @@ class ProductsRowHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List>(
-        future: DataSeeder.fetchproduct(),
-        builder: ((context, snapshot) {
-          if (snapshot.hasData && snapshot.data != null) {
-            List<dynamic> pro = snapshot.data!;
-            return SizedBox(
-              height: 60,
-              child: PageView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    children: [
-                      Container(
-                        child: Text(pro[index].name.toString()),
-                      ),
-                      Container(
-                        child: Text(pro[index].description.toString()),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0),
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                  pro[index].url.toString() ?? '',
+    return Consumer<List>(
+      // child: FutureBuilder<List>(
+      //     future: DataSeeder.fetchproduct(),
+      //     builder: ((context, snapshot) {
+      //       if (snapshot.hasData && snapshot.data != null) {
+      //         List<dynamic> pro = snapshot.data!;
+      //         return SizedBox(
+      //           height: 60,
+      //           child: PageView.builder(
+      //             itemBuilder: (BuildContext context, int index) {
+      //               return Column(
+      //                 children: [
+      //                   Container(
+      //                     child: Text(pro[index].name.toString()),
+      //                   ),
+      //                   Container(
+      //                     child: Text(pro[index].description.toString()),
+      //                   ),
+      //                   Container(
+      //                     decoration: BoxDecoration(
+      //                         borderRadius: BorderRadius.circular(30.0),
+      //                         image: DecorationImage(
+      //                             image: NetworkImage(
+      //                               pro[index].url.toString() ?? '',
 
-                                  // "https://images.unsplash.com/photo-1547721064-da6cfb341d50",
-                                ),
-                                fit: BoxFit.cover)),
-                      ),
-                    ],
-                  );
-                },
-                itemCount: pro.length,
-                scrollDirection: Axis.horizontal,
-              ),
+      //                               // "https://images.unsplash.com/photo-1547721064-da6cfb341d50",
+      //                             ),
+      //                             fit: BoxFit.cover)),
+      //                   ),
+      //                 ],
+      //               );
+      //             },
+      //             itemCount: pro.length,
+      //             scrollDirection: Axis.horizontal,
+      //           ),
+      //         );
+      //       }
+      //       return CircularProgressIndicator();
+      //     }))
+
+      builder: (BuildContext context, List<dynamic> value, _) {
+        return PageView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return Column(
+              children: [
+                Container(
+                  child: Text(value[index].name.toString()),
+                ),
+                Container(
+                  child: Text(value[index].description.toString()),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                      image: DecorationImage(
+                          image: NetworkImage(
+                            value[index].url.toString() ?? '',
+                          ),
+                          fit: BoxFit.cover)),
+                ),
+              ],
             );
-          }
-          return CircularProgressIndicator();
-        }));
+          },
+        );
+      },
+    );
 
     // Padding(
     //   padding: const EdgeInsets.symmetric(vertical: 8),

@@ -11,7 +11,7 @@ import '../models/adv.model.dart';
 class DataSeeder {
   static Map _data = {};
 
-  static List<Product> products = [];
+  static List <Product> products = [];
   static List<CategoryData> categories = [];
   static List<Adv> adv = [];
 
