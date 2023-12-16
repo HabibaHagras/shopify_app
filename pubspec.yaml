@@ -44,6 +44,8 @@ dependencies:
   dots_indicator: 
   get_it: ^7.6.4
   provider: ^6.1.1
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.15.3
 
 dev_dependencies:
   flutter_test:

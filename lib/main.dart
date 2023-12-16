@@ -8,10 +8,15 @@ import 'package:shopify_app/utils/theme.utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'providers/productProvider.dart';
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+ await Firebase.initializeApp(
+   options: DefaultFirebaseOptions.currentPlatform,
+ );
   var prefrenceInstance = await SharedPreferences.getInstance();
   GetIt.I.registerSingleton<SharedPreferences>(prefrenceInstance);
 

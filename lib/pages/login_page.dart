@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,6 +33,12 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  final _auth = FirebaseAuth.instance;
+
+  late String email;
+  late String password;
+  bool showSpinner = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +61,10 @@ class _LoginPageState extends State<LoginPage> {
                       height: 20,
                     ),
                     TextFormField(
+                      onChanged: (value) {
+                        email = value;
+                        //Do something with the user input.
+                      },
                       keyboardType: TextInputType.emailAddress,
                       controller: emailController,
                       validator: (value) {
@@ -79,6 +90,9 @@ class _LoginPageState extends State<LoginPage> {
                       height: 20,
                     ),
                     TextFormField(
+                      onChanged: (value) {
+                        password = value;
+                      },
                       obscureText: obscureText,
                       controller: passwordController,
                       validator: (value) {
@@ -113,8 +127,21 @@ class _LoginPageState extends State<LoginPage> {
                       height: 50,
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                      if ((formKey.currentState?.validate() ?? false)) {
+                      onPressed: () async {
+                        try {
+                          final user = await _auth.signInWithEmailAndPassword(
+                              email: email, password: password);
+                          if (user != null) {
+                            Navigator.pushNamed(context, 'home_screen');
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                        setState(() {
+                          showSpinner = false;
+                        });
+
+                        if ((formKey.currentState?.validate() ?? false)) {
                           GetIt.I<SharedPreferences>()
                               .setString('user', emailController.text);
                           Navigator.pushReplacement(context,

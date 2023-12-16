@@ -31,7 +31,7 @@ Container(
         // "https://images.unsplash.com/photo-1547721064-da6cfb341d50",
       ), fit: BoxFit.cover)
     ),
-  ),
+  ),     
   
 ),
 Text(adv[index].description.toString())
