@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopify_app/pages/master_page.dart';
 import 'package:shopify_app/pages/login_page.dart';
 import 'package:shopify_app/pages/splash_page.dart';
+import 'package:shopify_app/providers/app_auth.provider.dart';
 import 'package:shopify_app/providers/category.provider.dart';
 import 'package:shopify_app/providers/home.provider.dart';
 import 'package:shopify_app/services/prefrences.service.dart';
@@ -31,10 +32,10 @@ void main() async {
   }
 
     runApp(MultiProvider(providers: [
-    /*
+    
     ChangeNotifierProvider(
       create: (_) => AppAuthProvider()),
-      */
+      
     Provider(create: (_) => CategoryProvider()),
     Provider(create: (_) => ProductProvider()),
     ChangeNotifierProvider(create: (_) => HomeProvider())

@@ -1,71 +1,127 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shopify_app/pages/home_page.dart';
+import 'package:provider/provider.dart';
+import 'package:shopify_app/providers/app_auth.provider.dart';
 
-class RegistrationScreen extends StatefulWidget {
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
+
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  State<SignupPage> createState() => _SignupPageState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
-  final _auth = FirebaseAuth.instance;
-  late String email;
-  late String password;
-  bool showSpinner = false;
+class _SignupPageState extends State<SignupPage> {
+  @override
+  void initState() {
+    Provider.of<AppAuthProvider>(context, listen: false).init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  email = value;
-                  //Do something with the user input.
-                },
-                decoration: InputDecoration(label: Text("ENTER EMAIL"))),
-            SizedBox(
-              height: 8.0,
-            ),
-            TextFormField(
-                obscureText: true,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  password = value;
-                  //Do something with the user input.
-                },
-                decoration: InputDecoration(label: Text("ENTER pASS"))),
-            SizedBox(
-              height: 24.0,
-            ),
-            ElevatedButton(
-              child: Text('Register'),
-              onPressed: () async {
-                setState(() {
-                  showSpinner = true;
-                });
-                try {
-                  final newUser = await _auth.createUserWithEmailAndPassword(
-                      email: email, password: password);
-                  if (newUser != null) {
-                    Navigator.push(context,MaterialPageRoute(builder: (context) => const HomePage()),
-);
-                  }
-                } catch (e) {
-                  print(e);
-                }
-                setState(() {
-                  showSpinner = false;
-                });
-              },
-            )
-          ],
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Consumer<AppAuthProvider>(
+            builder: (ctx, appAuthProvider, _) {
+              return Form(
+                key: appAuthProvider.formKey,
+                child: SingleChildScrollView(
+                  child: SafeArea(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 100,
+                          width: 100,
+                          color: Colors.red,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Text('SignUp'),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          controller: appAuthProvider.emailController,
+                          validator: (value) {
+                            if (value == null || value == '') {
+                              return 'email is required';
+                            }
+                            if (!EmailValidator.validate(value)) {
+                              return 'Enter Valid Email';
+                            } else {
+                              if (!value.split('@').last.contains('gmail')) {
+                                return 'Enter Valid Gmail';
+                              }
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            label: const Text('Email'),
+                            suffixIcon: const Icon(Icons.mail),
+                            // fillColor: Colors.red,
+                            isDense: true,
+                            filled: true,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          obscureText: appAuthProvider.obscureText,
+                          controller: appAuthProvider.passwordController,
+                          validator: (value) {
+                            if (value == null || value == '') {
+                              return 'password is required';
+                            }
+                            if (value.length < 8) {
+                              return 'Password length must be 8';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            label: const Text('Password'),
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                appAuthProvider.toggleObscure();
+                              },
+                              child: appAuthProvider.obscureText
+                                  ? const Icon(Icons.visibility_off)
+                                  : const Icon(Icons.visibility),
+                            ),
+
+                            // fillColor: Colors.red,
+                            isDense: true,
+                            filled: true,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await appAuthProvider.signUp(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(300, 60),
+                          ),
+                          child: const Text('Signup'),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
