@@ -5,8 +5,8 @@ class Adv {
 
   Adv();
 
-  Adv.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+  Adv.fromJson(Map<String, dynamic> json , String docId) {
+    id = docId;
     url = json['url'];
     description = json['description'];
   }

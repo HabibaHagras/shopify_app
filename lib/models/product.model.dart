@@ -10,8 +10,8 @@ class Product {
 
   Product();
 
-  Product.fromJson(Map<String, dynamic> data) {
-    id = data['id'];
+  Product.fromJson(Map<String, dynamic> data,[String? docId]) {
+    id = docId;
     url = data['url'];
 
     categoryId = data['categoryId'];

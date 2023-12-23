@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopify_app/pages/master_page.dart';
 import 'package:shopify_app/pages/login_page.dart';
 import 'package:shopify_app/pages/splash_page.dart';
+import 'package:shopify_app/providers/category.provider.dart';
+import 'package:shopify_app/providers/home.provider.dart';
 import 'package:shopify_app/services/prefrences.service.dart';
 import 'package:shopify_app/utils/theme.utils.dart';
 import 'package:get_it/get_it.dart';
@@ -28,14 +30,14 @@ void main() async {
     print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Error When Set prefrences');
   }
 
-  runApp(MultiProvider(providers: [
-    FutureProvider<List>(
-      create: (_) => ProductProvider().getProducts(),
-      initialData: [],
-      catchError: (_, err) {
-        return [];
-      },
-    )
+    runApp(MultiProvider(providers: [
+    /*
+    ChangeNotifierProvider(
+      create: (_) => AppAuthProvider()),
+      */
+    Provider(create: (_) => CategoryProvider()),
+    Provider(create: (_) => ProductProvider()),
+    ChangeNotifierProvider(create: (_) => HomeProvider())
   ], child: const MyApp()));
 }
 
