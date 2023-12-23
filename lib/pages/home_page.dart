@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                             axisCount: GridLayoutEnum.threeElementsInRow,
                             shrinkWrap: true,
                             children: snapshot.data
-                                    ?.map((e) => ProductWidget(product: e))
+                                    ?.map((e) => ProductWidget())
                                     .toList() ??
                                 [],
                           );

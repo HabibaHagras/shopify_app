@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
 import 'package:shopify_app/models/category.model.dart';
+import 'package:shopify_app/providers/category.provider.dart';
 
 class CategoryItemRowWidget extends StatelessWidget {
   final CategoryData categoryData;
@@ -14,54 +15,55 @@ class CategoryItemRowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 75,
-          width: 75,
-          decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                   
-                    offset: const Offset(0, 10),
-                    blurRadius: 5,
-                    spreadRadius: 2)
+    return FutureBuilder(
+        future: CategoryProvider().getCategories(context),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            List<dynamic> categoryData = snapshot.data!;
+            return Column(
+              children: [
+                PageView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: 75,
+                      width: 75,
+                      decoration: BoxDecoration(boxShadow: [
+                        BoxShadow(
+                            offset: const Offset(0, 10),
+                            blurRadius: 5,
+                            spreadRadius: 2)
+                      ], shape: BoxShape.circle),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: categoryData[index].title != null ? 10 : 0),
+                        child: Center(
+                          child: iconWidget != null
+                              ? const Icon(
+                                  Icons.arrow_forward_ios_outlined,
+                                  size: 30,
+                                  color: Colors.red,
+                                )
+                              : Text(
+                                  categoryData[index].description.toString() ??
+                                      '',
+                                ),
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: categoryData.length,
+                  scrollDirection: Axis.horizontal,
+                ),
+                const SizedBox(
+                  height: 7,
+                ),
               ],
-             
-              shape: BoxShape.circle),
-          child: Padding(
-            padding: EdgeInsets.only(top: categoryData.title != null ? 10 : 0),
-            child: Center(
-              child: iconWidget != null
-                  ? const Icon(
-                      Icons.arrow_forward_ios_outlined,
-                      size: 30,
-                      color: Colors.red,
-                    )
-                  : Text(
-                      categoryData.description.toString() ?? '',
-                     
-                    ),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 7,
-        ),
-        Text(
-          categoryData.title ?? 'No Title',
-          style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Color(0xff515C6F)),
-        )
-      ],
-    );
+            );
+          }
+
+          return CircularProgressIndicator();
+        });
   }
-}
-
-
-
 
 /*
 class ProductItemRowWidget extends StatelessWidget {
@@ -128,3 +130,4 @@ class ProductItemRowWidget extends StatelessWidget {
   }
 }
 */
+}

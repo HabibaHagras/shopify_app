@@ -1,8 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shopify_app/models/adv.model.dart';
+import 'package:shopify_app/providers/adv.provider.dart';
 import 'package:shopify_app/seeder/data.seeder.dart';
-
+/*
 class adv_carousel extends StatelessWidget {
   const adv_carousel({super.key, required this.adv});
   final Adv adv;
@@ -59,13 +60,13 @@ class adv_carousel extends StatelessWidget {
 }
 
 
+*/
 
 
 
 
 
 
-/** 
 
 
 class adv_carousel extends StatelessWidget {
@@ -74,7 +75,7 @@ class adv_carousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<dynamic>?>(
-        future: DataSeeder.fetchadv(),
+        future: AdvProvider().getAdv(context),
         builder: ((context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             List<dynamic> adv = snapshot.data!;
@@ -136,5 +137,3 @@ Text(adv[index].description.toString())
   }
 }
 
-getadv() {}
-**/

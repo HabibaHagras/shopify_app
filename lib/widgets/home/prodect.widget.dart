@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:provider/provider.dart';
+import 'package:shopify_app/providers/productProvider.dart';
 import 'package:shopify_app/seeder/data.seeder.dart';
 import 'package:shopify_app/widgets/home/iteams.product.dart';
 
-
-
 import 'package:flutter/material.dart';
 import 'package:shopify_app/models/product.model.dart';
-
+/*
 class ProductWidget extends StatelessWidget {
   const ProductWidget({super.key, required this.product});
   final Product product;
@@ -61,61 +60,55 @@ class ProductWidget extends StatelessWidget {
   }
 }
 
+*/
 
+class ProductWidget extends StatelessWidget {
+  
 
-
-
-
-
-
-
-
-/*
-class ProductsRowHome extends StatelessWidget {
-  const ProductsRowHome({super.key});
+   ProductWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<List>(
-      // child: FutureBuilder<List>(
-      //     future: DataSeeder.fetchproduct(),
-      //     builder: ((context, snapshot) {
-      //       if (snapshot.hasData && snapshot.data != null) {
-      //         List<dynamic> pro = snapshot.data!;
-      //         return SizedBox(
-      //           height: 60,
-      //           child: PageView.builder(
-      //             itemBuilder: (BuildContext context, int index) {
-      //               return Column(
-      //                 children: [
-      //                   Container(
-      //                     child: Text(pro[index].name.toString()),
-      //                   ),
-      //                   Container(
-      //                     child: Text(pro[index].description.toString()),
-      //                   ),
-      //                   Container(
-      //                     decoration: BoxDecoration(
-      //                         borderRadius: BorderRadius.circular(30.0),
-      //                         image: DecorationImage(
-      //                             image: NetworkImage(
-      //                               pro[index].url.toString() ?? '',
+    return FutureBuilder<List<dynamic>?>(
+        future: ProductProvider().getProducts(context),
+        builder: ((context, snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            List<dynamic> pro = snapshot.data!;
+            return SizedBox(
+              height: 60,
+              child: PageView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: [
+                      Container(
+                        child: Text(pro[index].name.toString()),
+                      ),
+                      Container(
+                        child: Text(pro[index].description.toString()),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                  pro[index].url.toString() ?? '',
 
-      //                               // "https://images.unsplash.com/photo-1547721064-da6cfb341d50",
-      //                             ),
-      //                             fit: BoxFit.cover)),
-      //                   ),
-      //                 ],
-      //               );
-      //             },
-      //             itemCount: pro.length,
-      //             scrollDirection: Axis.horizontal,
-      //           ),
-      //         );
-      //       }
-      //       return CircularProgressIndicator();
-      //     }))
-
+                                  // "https://images.unsplash.com/photo-1547721064-da6cfb341d50",
+                                ),
+                                fit: BoxFit.cover)),
+                      ),
+                    ],
+                  );
+                },
+                itemCount: pro.length,
+                scrollDirection: Axis.horizontal,
+              ),
+            );
+          }
+          return CircularProgressIndicator();
+        }));
+/******* 
+ *  return Consumer<List>(
       builder: (BuildContext context, List<dynamic> value, _) {
         return PageView.builder(
           itemBuilder: (BuildContext context, int index) {
@@ -142,7 +135,7 @@ class ProductsRowHome extends StatelessWidget {
         );
       },
     );
-
+*******/
     // Padding(
     //   padding: const EdgeInsets.symmetric(vertical: 8),
     //   child: Row(
@@ -201,4 +194,3 @@ class ProductsRowHome extends StatelessWidget {
     // );
   }
 }
-*/
